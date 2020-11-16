@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+</body>
+    <select id="father" onchange="exchange();">
+        <option value="china">中国</option>
+        <option value="america">美国</option>
+    </select>
+
+    <select id="son">
+    </select>
+
+
+<script>
+    var china = ["上海","北京","天津"];
+    var america = ["加州","德州","新泽西州"];
+
+    for(i in china) {
+        $("#son").append("<option value='"+china[i]+"'>"+china[i]+"</option>");
+    }
+
+    function exchange() {
+        var flg = $("#father option:selected").val();
+        if(flg === "china") {
+            $("#son").empty();
+            for(i in china) {
+                $("#son").append("<option value='"+china[i]+"'>"+china[i]+"</option>");
+            }
+        }
+        else {
+            $("#son").empty();
+            for(j in america) {
+                $("#son").append("<option value='"+america[j]+"'>"+america[j]+"</option>");
+            }
+        }
+    }
+</script>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work</title>
+    <script src="js/vue.js"></script>
+    <script src="js/vuelidate.min.js"></script>
+    <script src="js/vuelidator.min.js"></script>
+</head>
+
+<style>
+    .tb {
+        margin: auto;
+        text-align: center;
+    }
+</style>
+
+<body>
+<div id="app" style="text-align: center;">
+    <span style="color: red" v-show="isShow">{{ wrongMessage }}</span>
+    <table class="tb">
+        <tr>
+            <td>用户名:</td>
+            <td><input type="text" v-model="uName"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input type="password" v-model="uPass"></td>
+        </tr>
+        <tr>
+            <td>确认密码:</td>
+            <td><input type="password" v-model="uPassConfirm"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button @click="doCheck();">登录</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+
+<script>
+    Vue.use(window.vuelidate.default)
+    const {required, minLength, sameAs} = window.validators
+
+    const app = new Vue({
+        el: "#app",
+        data: {
+            uName: "",
+            uPass: "",
+            uPassConfirm: "",
+            isShow: false,
+            wrongMessage: ""
+        },
+        validations: {
+            uName: {
+                required,
+                minLength: minLength(2)
+            },
+            uPass: {
+                required,
+                minLength: minLength(6)
+            },
+            uPassConfirm: {
+                required,
+                sameAsPasswd: sameAs("uPass")
+            }
+        },
+        methods: {
+            doCheck: function () {
+                // console.log("用户名是否填写 "+this.$v.uName.required);
+                // console.log("用户名长度大于两位 "+this.$v.uName.minLength);
+                // console.log("密码是否填写 "+this.$v.uPass.required);
+                // console.log("密码长度是否大于6位 "+this.$v.uPass.minLength);
+                // console.log("确认密码是否填写 "+this.$v.uPassConfirm.required);
+                // console.log("两次密码是否一致 "+this.$v.uPassConfirm.sameAsPasswd);
+
+                if (this.$v.uName.required === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "请输入用户名";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else if (this.$v.uName.minLength === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "用户名长度必须大于两位";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else if (this.$v.uPass.required === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "请输入密码";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else if (this.$v.uPass.minLength === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "密码长度必须大于6位";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else if (this.$v.uPassConfirm.required === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "请再次输入密码";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else if (this.$v.uPassConfirm.sameAsPasswd === false) {
+                    this.isShow = !this.isShow;
+                    this.wrongMessage = "两次密码输入不一致";
+                    setTimeout(function () {
+                        app.isShow = !app.isShow;
+                    }, 2000)
+
+                } else {
+                    alert("执行axios提交数据");
+                }
+            }
+        }
+    });
+</script>
+</html>

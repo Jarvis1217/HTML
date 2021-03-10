@@ -1,0 +1,84 @@
+ * {
+     margin: 0;
+     padding: 0;
+ }
+body {
+    background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+  
+}
+.bigbox {
+    width: 1100px;
+    height: 600px;
+    margin: 185px auto;
+}
+.smallbox {
+    position: relative;
+    float: left;
+    margin-left: 50px;
+    width: 300px;
+    height: 500px;
+    overflow: hidden;
+}
+.smallbox .imga {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: all .3s;
+}
+.smallbox .imga img {
+    width: 100%;
+    height: 100%;
+}
+.smallbox:hover .imga {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    margin-left: 75px;
+}
+.smallbox h2 {
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    text-align: center;
+    transition: all .3s .1s;
+}
+.smallbox p {
+    position: absolute;
+    top: 250px;
+    width: 100%;
+    text-align: center;
+    text-indent: 2em;
+    transition: all .3s .2s;
+
+}
+.smallbox a {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    width: 100px;
+    height: 30px;
+    left: 50%;
+    margin-left: -50px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    text-decoration: none;
+    background-image: linear-gradient(to top, #a3bded 0%, #6991c7 100%); 
+    transition: all .3s .3s;
+}
+.smallbox h2 , .smallbox p ,.smallbox a{
+    opacity: 0;
+} 
+.smallbox:hover h2 {
+    opacity: 1;
+    transform: translateY(-10px);
+}
+.smallbox:hover p {
+    opacity: 1;
+    transform: translateY(-10px);
+}
+.smallbox:hover a {
+    opacity: 1;
+    transform: translateY(-10px);
+}

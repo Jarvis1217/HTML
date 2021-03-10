@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #ccc;
+}
+.slide {
+    position: relative;
+    margin: 100px auto;
+    width: 800px;
+    height: 500px;
+    text-align: center;
+    font-family: Arial;
+    color: #fff;
+    overflow: hidden;
+}
+.slide ul {
+    margin: 10px 0;
+    padding: 0;
+    width: calc(800px * 3);
+    transition: all .5s;
+}
+.slide li {
+    float: left;
+    width: 800px;
+    height: 500px;
+    list-style: none;
+    line-height: 500px;
+    font-size: 50px;
+}
+.slide li:nth-child(1) {
+    background-color: #9fa8ef;
+}
+.slide li:nth-child(2) {
+    background-color: #ef9fb1;
+}
+.slide li:nth-child(3) {
+    background-color: #9fefc3;
+}
+.slide input[name="button"] {
+    display: none;
+
+}
+.slide label[for^="button"] {
+    position: absolute;
+    top: 450px;
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    line-height: 20px;
+    color: #fff;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: .3s;
+}
+.slide label[for="button1"] {
+    left: 40%;
+}
+.slide label[for="button2"] {
+    left: 45%;
+}
+.slide label[for="button3"] {
+    left: 50%;
+}
+#button1:checked ~ul {
+    margin-left: 0;
+}
+#button2:checked ~ul {
+    margin-left: -800px;
+}
+#button3:checked ~ul {
+    margin-left: -1600px;
+}
+#button1:checked ~ label[for="button1"] {
+    background: rgb(255,80,0);
+}
+#button2:checked ~ label[for="button2"] {
+    background: rgb(255,80,0);
+}
+
+#button3:checked ~ label[for="button3"] {
+    background: rgb(255,80,0);
+}
+

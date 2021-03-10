@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+*{box-sizing: border-box; user-select: none; font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;}
+body{
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: radial-gradient(circle farthest-corner, #0424f8, #000)
+}
+.container{
+  width: 500px;
+  max-width: 95%;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: center;
+  background-image: linear-gradient(to bottom, #555, #000);
+}
+.panels{
+  width: 90%;
+  min-height: 150px;
+  height: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 25px;
+  text-align: end;
+  border-bottom: 1px solid #6d6d6d;
+  overflow: auto;
+  overflow-y: hidden;
+}
+.panels .mainPanel{
+  font-size: 3em;
+  color: #fff;
+  width: 100%;
+}
+.panels .secondPanel{
+  font-size: 1em;
+  color: #aaa;
+  width: 100%;
+  height: 20px;
+  white-space: nowrap;
+}
+.buttons-grid{
+  width: 100%;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(4, calc(100% / 4 - (30px / 4)));
+  grid-template-rows: repeat(6, calc(100% / 6 - (50px / 6)));
+  grid-template-areas: '. . . .' '. . . sum' 'seven eight nine subtract' 'four five six multiply' 'one two three divide' 'dot zero del result';
+  padding: 10px;
+  gap: 10px;
+}
+.buttons-grid > div{
+  font-size: 2em;
+  border-radius: 5px;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttons-grid > div:hover{background-color: #333;}
+.buttons-grid > div[class^='num']:hover{text-shadow: 0px 0px 20px #ffffff;}
+.sum{grid-area: sum;}
+.subtract{grid-area: subtract;}
+.multiply{grid-area: multiply;}
+.divide{grid-area: divide;}
+.result{grid-area: result;}
+.numNine{grid-area: nine;}
+.numEight{grid-area: eight;}
+.numSeven{grid-area: seven;}
+.numSix{grid-area: six;}
+.numFive{grid-area: five;}
+.numFour{grid-area: four;}
+.numThree{grid-area: three;}
+.numTwo{grid-area: two;}
+.numOne{grid-area: one;}
+.dot{grid-area: dot;}
+.numZero{grid-area: zero;}
+.del{grid-area: del;}
+
+.pow{font-size: .5em; position: relative; top: -10px;}
+.root{font-size: .5em; position: relative; top: -15px; right: -15px;}
+.buttons-grid > .special{color: #eee;}
+.buttons-grid > .classic{color: #072ffa;}
+.buttons-grid > .result{
+  background-color: #042cf6;
+  color: #fff;
+  width: 55px;
+  height: 55px;
+  align-self: center;
+  justify-self: center;
+  border-radius: 50%;
+  box-shadow: 0px 0px 10px 7px #0223fc;
+}
+.buttons-grid > .result:hover{background-color: #053afa;}
+
+@media only screen and (max-width: 375px){
+  .buttons-grid > .special{font-size: 1.7em;}
+  .buttons-grid div:hover{background-color: initial;}
+  .buttons-grid div[class^="num"]:hover{text-shadow: initial;}
+}

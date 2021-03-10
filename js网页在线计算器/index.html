@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>js计算器</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body onkeydown="globalKey(event)">
+
+  <main class="container">
+    <header class="panels">
+      <div class="secondPanel"></div>
+      <div class="mainPanel">0</div>
+    </header>
+    <div class="buttons-grid">
+      <div onClick="clearPanels()" class="special">C</div>
+      <div onClick="operators('Mod')" class="special">Mod.</div>
+      <div onClick="changeSign()" class="special">+/-</div>
+      <div onClick="specialSolver('fact')" class="special">x!</div>
+      <div onClick="specialSolver('1/')" class="special">1/x</div>
+      <div onClick="specialSolver('√')" class="special"><sup class="root">2</sup>&radic;x</div>
+      <div onClick="specialSolver('sqr')" class="special">x<sup class="pow">2</sup></div>
+      <div onClick="operators('+')" class="sum classic">&plus;</div>
+      <div onClick="operators('-')" class="subtract classic">&minus;</div>
+      <div onClick="operators('\u00D7')" class="multiply classic">&times;</div>
+      <div onClick="operators('\u00F7')" class="divide classic">&divide;</div>
+      <div onClick="result()" class="result">=</div>
+      <div onClick="global(this)" class="numNine">9</div>
+      <div onClick="global(this)" class="numEight">8</div>
+      <div onClick="global(this)" class="numSeven">7</div>
+      <div onClick="global(this)" class="numSix">6</div>
+      <div onClick="global(this)" class="numFive">5</div>
+      <div onClick="global(this)" class="numFour">4</div>
+      <div onClick="global(this)" class="numThree">3</div>
+      <div onClick="global(this)" class="numTwo">2</div>
+      <div onClick="global(this)" class="numOne">1</div>
+      <div onClick="dotChecker()" class="dot special">.</div>
+      <div onClick="global(this)" class="numZero">0</div>
+      <div onClick="delElement()" class="del special">&lArr;</div>
+    </div>
+  </main>
+
+  <script src="js/script.js"></script>
+
+</body>
+</html>

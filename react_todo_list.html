@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+    class TodoList extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { items: [], text: '' };
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        render() {
+            return (
+                <div className="container mt-5">
+                    <h3 className="text-center mb-4">Todo_List</h3>
+                    <form className="form-group" onSubmit={this.handleSubmit}>
+                        <input
+                            className="form-control mb-3"
+                            onChange={this.handleChange}
+                            value={this.state.text}
+                        />
+                        <button className="btn btn-primary btn-block">
+                            添加 (当前总数: {this.state.items.length})
+                        </button>
+                    </form>
+                    <TodoItems items={this.state.items} onDelete={this.handleDelete.bind(this)} />
+                </div>
+            );
+        }
+
+        handleChange(e) {
+            this.setState({ text: e.target.value });
+        }
+
+        handleSubmit(e) {
+            e.preventDefault();
+            if (this.state.text.length === 0) {
+                return;
+            }
+            const newItem = {
+                text: this.state.text,
+                id: Date.now()
+            };
+            this.setState(state => ({
+                items: state.items.concat(newItem),
+                text: ''
+            }));
+        }
+
+        handleDelete(id) {
+            this.setState(state => ({
+                items: state.items.filter(item => item.id !== id)
+            }));
+        }
+    }
+
+    class TodoItems extends React.Component {
+        render() {
+            return (
+                <ul className="list-group">
+                    {this.props.items.map((item, index) => (
+                        <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+                            {index + 1}. {item.text}
+                            <button className="btn btn-danger btn-sm" onClick={() => this.props.onDelete(item.id)}>x</button>
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <TodoList />,
+        document.getElementById('root')
+    );
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办</title>
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- CSS -->
+    <style>
+        .todo-app {
+          max-width: 400px;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          text-align: center;
+        }
+        
+        h1 {
+          text-align: center;
+        }
+        
+        input {
+          padding: 8px;
+          margin-right: 3px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        }
+        
+        button {
+          padding: 8px 12px;
+          border: none;
+          background-color: #007bff;
+          color: #fff;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+        
+        button:hover {
+          background-color: #0056b3;
+        }
+        
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 0;
+          border-bottom: 1px solid #ddd;
+        }
+        
+        li:last-child {
+          border-bottom: none;
+        }
+
+        li div {
+            margin: auto;
+        }
+        
+        li button {
+          margin-left: 3px;
+        }
+
+        .todo-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .todo-item span {
+            flex: 1;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="module">
+        const { createApp, ref } = Vue;
+
+        const app = createApp({
+            setup() {
+                // 待办列表
+                const todos = ref([])
+
+                // 新添加待办
+                const newTodo = ref('')
+
+                // 添加待办事项
+                const addTodo = () => {
+                    if (newTodo.value.trim() !== '') {
+                        todos.value.push({
+                            id: Date.now(),
+                            text: newTodo.value.trim(),
+                            completed: false,
+                            editing: false
+                        })
+                        newTodo.value = ''
+                    }
+                }
+
+                // 删除待办事项
+                const deleteTodo = (index) => {
+                    todos.value.splice(index, 1)
+                }
+
+                // 编辑待办事项
+                const editTodo = (todo) => {
+                    todo.editing = true
+                }
+
+                // 保存编辑后的待办事项
+                const saveTodo = (todo) => {
+                    if (todo.text.trim() !== '') {
+                        todo.editing = false;
+                        console.log(todo);
+                    } else {
+                        deleteTodo(todos.value.indexOf(todo))
+                    }
+                }
+
+                return{
+                    todos,newTodo,
+                    addTodo,deleteTodo,
+                    editTodo,saveTodo
+                };
+            },
+            template: `
+              <div class="todo-app">
+                <h1>待办清单</h1>
+                
+                <!-- 添加待办事项 -->
+                <div>
+                    <input v-model="newTodo" @keyup.enter="addTodo" placeholder="添加新待办" />
+                    <button @click="addTodo">添加</button>
+                </div>
+                
+                <!-- 待办事项列表 -->
+                <ul>
+                    <li v-for="(todo, index) in todos" :key="todo.id">
+                        <!-- 编辑模式 -->
+                        <div v-if="todo.editing">
+                            <input v-model="todo.text" @keyup.enter="saveTodo(todo)" />
+                            <button @click="saveTodo(todo)">保存</button>
+                        </div>
+
+                        <!-- 显示模式 -->
+                        <div v-else class="todo-item">
+                            <input type="checkbox" v-model="todo.completed">
+                            <span :style="{ textDecoration: todo.completed ? 'line-through 2px' : 'none' }">{{ todo.text }}</span>
+                            <button class="icon-button" @click="editTodo(todo)">编辑</button>
+                            <button class="icon-button" @click="deleteTodo(index)">删除</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        `
+        });
+
+        // 挂载到 #app
+        app.mount('#app');
+    </script>
+</body>
+</html>

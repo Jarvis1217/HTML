@@ -63,7 +63,6 @@ const clearOnExit = async () => {
     await fetch('http://127.0.0.1:8080/clear', {
       method: 'GET'
     });
-    console.log("Get /clear")
   } catch (error) {
     console.error('Error clearing on exit:', error);
   }

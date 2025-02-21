@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刮刮卡</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .top-container {
+            display: flex;
+            gap: 15px;  /* 缩小间距 */
+            margin-bottom: 20px;
+        }
+
+        .container-wrapper {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;  /* 缩小网格间距 */
+        }
+
+        .scratch-container {
+            position: relative;
+            width: 120px;  /* 宽度缩小20% */
+            height: 80px;   /* 高度缩小20% */
+        }
+
+        .scratch-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .result {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;  /* 字体缩小 */
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="top-container" id="top-container"></div>
+<div class="container-wrapper" id="wrapper"></div>
+
+<script>
+    // 创建顶部两个刮刮卡
+    const topContainer = document.getElementById('top-container');
+    for(let i = 0; i < 2; i++) {
+        createScratchCard(topContainer);
+    }
+
+    // 创建5x5矩阵
+    const wrapper = document.getElementById('wrapper');
+    for(let i = 0; i < 25; i++) {
+        createScratchCard(wrapper);
+    }
+
+    function createScratchCard(parent) {
+        const container = document.createElement('div');
+        container.className = 'scratch-container';
+
+        const result = document.createElement('div');
+        result.className = 'result';
+
+        const canvas = document.createElement('canvas');
+        canvas.className = 'scratch-canvas';
+
+        container.appendChild(result);
+        container.appendChild(canvas);
+        parent.appendChild(container);
+
+        initScratchCard(canvas, result);
+    }
+
+    function initScratchCard(canvas, result) {
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // 设置缩小后的画布尺寸
+        canvas.width = 120;  // 匹配容器宽度
+        canvas.height = 80; // 匹配容器高度
+
+        ctx.fillStyle = '#666';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        result.textContent = Math.floor(Math.random() * 100) + 1;
+
+        // 事件绑定
+        const handleMove = e => {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.lineWidth = 25;  // 擦除区域缩小
+            ctx.lineCap = 'round';
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        };
+
+        canvas.addEventListener('mousedown', e => {
+            isDrawing = true;
+            handleMove(e);
+        });
+        canvas.addEventListener('touchstart', e => {
+            isDrawing = true;
+            handleMove(e);
+        });
+        canvas.addEventListener('mousemove', handleMove);
+        canvas.addEventListener('touchmove', handleMove);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('touchend', () => isDrawing = false);
+    }
+</script>
+</body>
+</html>

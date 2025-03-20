@@ -211,7 +211,7 @@
                 
                 // 生成随机奖金 (10, 20, 50)
                 const getRandomPrize = () => {
-                    const prizes = [10, 20, 50]
+                    const prizes = [10, 20, 50, 100]
                     return prizes[Math.floor(Math.random() * prizes.length)]
                 }
                 
@@ -256,11 +256,15 @@
                 
                 // 刮开所有格子
                 const scratchAll = () => {
-                    for (let i = 0; i < grid.length; i++) {
-                        for (let j = 0; j < grid[i].length; j++) {
-                            grid[i][j].scratched = true
-                        }
-                    }
+                    // 将二维数组转换为一维以便按顺序处理
+                    const cells = grid.flatMap(row => row);
+
+                    // 为每个格子创建逐渐增加的延迟
+                    cells.forEach((cell, index) => {
+                        setTimeout(() => {
+                            cell.scratched = true;
+                        }, index * 300);
+                    });
                 }
                 
                 // 检查是否所有格子都已刮开
